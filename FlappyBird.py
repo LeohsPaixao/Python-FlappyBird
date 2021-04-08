@@ -19,7 +19,7 @@ pygame.font.init()
 POINT_FONT = pygame.font.SysFont('Times New Roman', 32)
 
 
-class bird:
+class Bird:
     IMGS = BIRD_IMAGES
     ROTATION_MAX = 25
     ROTATION_SPEED = 20
@@ -96,7 +96,7 @@ class bird:
         pygame.mask.from_surface(self.image)
 
 
-class pipe:
+class Pipe:
     DISTANCE = 200  # 200 pixels
     SPEED = 5  # 5 pixels para esquerda
 
@@ -115,7 +115,7 @@ class pipe:
         self.pos_top = self.height - self.pos_top_image.get_height()
         self.pos_base = self.height + self.DISTANCE
 
-    def move_pipe(self):
+    def move_Pipe(self):
         self.x -= self.SPEED
 
     def draw(self, screen):
@@ -139,7 +139,7 @@ class pipe:
             return False
 
 
-class floor:
+class Floor:
     SPEED = 5
     WIDGHT = FLOOR_IMAGE.get_width()
     IMAGE = FLOOR_IMAGE
@@ -169,8 +169,64 @@ def draw_screen(screen, birds, pipes, floor, point):
         bird.draw(screen)
     for pipe in pipes:
         pipe.draw(screen)
-    
+
     text = POINT_FONT.render(f"Pontuação: {point}", 1, (221, 217, 231))
     screen.blit(text, (SCREEN_WIDGHT - 10 - text.get_width(), 10))
     floor.draw(screen)
     pygame.display.update()
+
+
+def main():
+    birds = [Bird(230, 350)]
+    floor = Floor(730)
+    pipes = [Pipe(700)]
+    screen = pygame.display.set_mode((SCREEN_WIDGHT, SCREEN_HEIGHT))
+    point = 0
+    timer = pygame.time.Clock()
+
+    start = True
+    while start:
+        timer.tick(60)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                start = False
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    for bird in birds:
+                        bird.jump()
+
+        for bird in birds:
+            bird.move_Bird()
+        floor.move()
+
+        add_pipe = False
+        rm_pipe = []
+        for pipe in pipes:
+            for i, bird in enumerate(birds):
+                if pipe.clash(bird):
+                    birds.pop(i)
+                if not pipe.passed and bird.x > pipe.x:
+                    pipe.passed = True
+                    add_pipe = True
+            pipe.move_Pipe()
+            if pipe.x + pipe.pos_top_image() < 0:
+                rm_pipe.append(pipe)
+
+        if add_pipe:
+            point += 1
+            pipes.append(Pipe(600))
+        for pipe in rm_pipe:
+            pipes.remove(pipe)
+
+        for i, bird in enumerate(birds):
+            if (bird.y + bird.image.get_height()) > floor.y or bird.y < 0:
+                birds.pop(i)
+
+        draw_screen(screen, birds, pipes, floor, point)
+
+
+if __name__ == '__main':
+    main()
