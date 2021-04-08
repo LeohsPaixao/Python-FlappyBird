@@ -67,12 +67,16 @@ class bird:
 
         if self.image_score < self.ANIMATION_TIME:
             self.image = self.IMGS[0]
+        # Animation Time(5 seg) * 2 = 10 seg
         elif self.image_score < self.ANIMATION_TIME*2:
             self.image = self.IMGS[1]
+        # Animation Time(5 seg) * 3 = 15 seg
         elif self.image_score < self.ANIMATION_TIME*3:
             self.image = self.IMGS[2]
+        # Animation Time(5 seg) * 4 =  20 seg
         elif self.image_score < self.ANIMATION_TIME*4:
             self.image = self.IMGS[1]
+        # Animation Time((5 seg) * 4) + 1 = 21 seg
         elif self.image_score < self.ANIMATION_TIME*4 + 1:
             self.image = self.IMGS[0]
             self.image_score = 0
@@ -105,6 +109,34 @@ class pipe:
         self.pos_base_image = PIPE_IMAGE
         self.passed = False
         self.set_height()
+
+    def set_height(self):
+        self.height = random.randrange(50, 450)
+        self.pos_top = self.height - self.pos_top_image.get_height()
+        self.pos_base = self.height + self.DISTANCE
+
+    def move_pipe(self):
+        self.x -= self.SPEED
+
+    def draw(self, screen):
+        screen.blit(self.pos_base_image, (self.x, self.pos_top))
+        screen.blit(self.pos_base_image, (self.x, self.pos_base))
+
+    def clash(self, bird):
+        bird_mask = bird.get_mask()
+        top_mask = pygame.mask.from_surface(self.pos_top_image)
+        base_mask = pygame.mask.from_surface(self.pos_base_image)
+
+        distance_top = (self.x - bird.x, self.pos_top - round(bird.y))
+        distance_base = (self.x - bird.x, self.pos_base - round(bird.y))
+
+        clash_point_top = bird_mask.overlap(top_mask, distance_top)
+        clash_point_base = bird_mask.overlap(base_mask, distance_base)
+
+        if clash_point_base or clash_point_top:
+            return True
+        else:
+            return False
 
 
 class floor:
