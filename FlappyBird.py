@@ -30,7 +30,7 @@ class bird:
         self.y = y
         self.angle = 0
         self.speed = 0
-        self.widght = self.y
+        self.height = self.y
         self.time = 0
         self.image_score = 0
         self.image = self.IMGS[0]
@@ -38,7 +38,7 @@ class bird:
     def jump(self):
         self.speed = 10.5
         self.time = 0
-        self.widght = self.y
+        self.height = self.y
 
     def move_Bird(self):
         # Calcular o deslocamento
@@ -54,7 +54,7 @@ class bird:
         self.y += displacement
 
         # O Angulo do Passaro
-        if displacement < 0 or self.y < (self.widght + 50):
+        if displacement < 0 or self.y < (self.height + 50):
             if self.angle < self.ROTATION_MAX:
                 self.angle = self.ROTATION_MAX
         else:
@@ -88,9 +88,23 @@ class bird:
         rectangle = rotated_image.get_rect(center=pos_center_image)
         screen.blit(rotated_image, rectangle.topleft)
 
+    def get_mask(self):
+        pygame.mask.from_surface(self.image)
+
 
 class pipe:
-    pass
+    DISTANCE = 200  # 200 pixels
+    SPEED = 5  # 5 pixels para esquerda
+
+    def __init__(self, x):
+        self.x = x
+        self.height = 0
+        self.pos_top = 0
+        self.pos_base = 0
+        self.pos_top_image = pygame.transform.flip(PIPE_IMAGE, False, True)
+        self.pos_base_image = PIPE_IMAGE
+        self.passed = False
+        self.set_height()
 
 
 class floor:
