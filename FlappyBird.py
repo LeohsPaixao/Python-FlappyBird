@@ -161,6 +161,13 @@ class floor:
     def draw(self, screen):
         screen.blit(self.IMAGE, (self.x1, self.y))
         screen.blit(self.IMAGE, (self.x2, self.y))
-    
 
+
+def draw_screen(screen, birds, pipes, floor, point):
+    screen.blit(BACKGROUND_IMAGE, (0, 0))
+    for bird in birds:
+        bird.draw(screen)
+    for pipe in pipes:
+        pipe.draw(screen)
     
+    text = POINT_FONT.render("")
