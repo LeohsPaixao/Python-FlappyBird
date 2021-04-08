@@ -2,7 +2,6 @@ import pygame
 import os
 import random
 
-pygame.init()
 
 SCREEN_WIDGHT = 500
 SCREEN_HEIGHT = 800
@@ -187,7 +186,7 @@ def main():
     birds = [Bird(230, 350)]
     floor = Floor(730)
     pipes = [Pipe(700)]
-    screen = pygame.display.set_mode(SCREEN_WIDGHT, SCREEN_HEIGHT)
+    screen = pygame.display.set_mode((SCREEN_WIDGHT, SCREEN_HEIGHT))
     point = 0
     timer = pygame.time.Clock()
 
