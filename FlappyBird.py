@@ -93,7 +93,7 @@ class Bird:
         screen.blit(rotated_image, rectangle.topleft)
 
     def get_mask(self):
-        pygame.mask.from_surface(self.image)
+        return pygame.mask.from_surface(self.image)
 
 
 class Pipe:
@@ -149,14 +149,14 @@ class Floor:
         self.x1 = 0
         self.x2 = self.WIDGHT
 
-    def move(self):
+    def move_Floor(self):
         self.x1 -= self.SPEED
         self.x2 -= self.SPEED
 
         if self.x1 + self.WIDGHT < 0:
-            self.x1 = self.x1 + self.WIDGHT
+            self.x1 = self.x2 + self.WIDGHT
         if self.x2 + self.WIDGht < 0:
-            self.x2 = self.x2 + self.WIDGHT
+            self.x2 = self.x1 + self.WIDGHT
 
     def draw(self, screen):
         screen.blit(self.IMAGE, (self.x1, self.y))
@@ -180,7 +180,7 @@ def main():
     birds = [Bird(230, 350)]
     floor = Floor(730)
     pipes = [Pipe(700)]
-    screen = pygame.display.set_mode((SCREEN_WIDGHT, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode(SCREEN_WIDGHT, SCREEN_HEIGHT)
     point = 0
     timer = pygame.time.Clock()
 
@@ -200,7 +200,7 @@ def main():
 
         for bird in birds:
             bird.move_Bird()
-        floor.move()
+        floor.move_Floor()
 
         add_pipe = False
         rm_pipe = []
