@@ -23,7 +23,7 @@ class bird:
     IMGS = BIRD_IMAGES
     ROTATION_MAX = 25
     ROTATION_SPEED = 20
-    ANIMATION_TIME = 5
+    ANIMATION_TIME = 5  # A cada 5 frames, a animação do passaro muda
 
     def __init__(self, x, y):
         self.x = x
@@ -33,7 +33,7 @@ class bird:
         self.widght = self.y
         self.time = 0
         self.image_score = 0
-        self.image = IMGS[0]
+        self.image = self.IMGS[0]
 
     def jump(self):
         self.speed = 10.5
@@ -60,6 +60,33 @@ class bird:
         else:
             if self.angle > -90:
                 self.angle = self.ROTATION_SPEED
+
+    def draw(self, screen):
+        # Definir qual imagem do passaro usar
+        self.image_score += 1
+
+        if self.image_score < self.ANIMATION_TIME:
+            self.image = self.IMGS[0]
+        elif self.image_score < self.ANIMATION_TIME*2:
+            self.image = self.IMGS[1]
+        elif self.image_score < self.ANIMATION_TIME*3:
+            self.image = self.IMGS[2]
+        elif self.image_score < self.ANIMATION_TIME*4:
+            self.image = self.IMGS[1]
+        elif self.image_score < self.ANIMATION_TIME*4 + 1:
+            self.image = self.IMGS[0]
+            self.image_score = 0
+
+        # Se o passaro tiver caindo, não bater as asas
+        if self.angle <= 80:
+            self.image = self.IMGS[1]
+            self.image_score = self.ANIMATION_TIME*2
+
+        # desenhar a imagem
+        rotated_image = pygame.transform.rotate(self.image, self.angle)
+        pos_center_image = self.image.get_rect(topleft=(self.x, self.y)).center
+        rectangle = rotated_image.get_rect(center=pos_center_image)
+        screen.blit(rotated_image, rectangle.topleft)
 
 
 class pipe:
