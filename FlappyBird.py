@@ -42,7 +42,7 @@ class Bird:
         self.image = self.IMGS[0]
 
     def jump(self):
-        self.speed = 10.5
+        self.speed = -10.5
         self.time = 0
         self.height = self.y
 
@@ -65,12 +65,13 @@ class Bird:
                 self.angle = self.ROTATION_MAX
         else:
             if self.angle > -90:
-                self.angle = self.ROTATION_SPEED
+                self.angle -= self.ROTATION_SPEED
 
     def draw(self, screen):
         # Definir qual imagem do passaro usar
         self.image_score += 1
 
+        # Animation Time(5 seg) = 5 seg
         if self.image_score < self.ANIMATION_TIME:
             self.image = self.IMGS[0]
         # Animation Time(5 seg) * 2 = 10 seg
@@ -83,12 +84,12 @@ class Bird:
         elif self.image_score < self.ANIMATION_TIME*4:
             self.image = self.IMGS[1]
         # Animation Time((5 seg) * 4) + 1 = 21 seg
-        elif self.image_score < self.ANIMATION_TIME*4 + 1:
+        elif self.image_score >= self.ANIMATION_TIME*4 + 1:
             self.image = self.IMGS[0]
             self.image_score = 0
 
         # Se o passaro tiver caindo, não bater as asas
-        if self.angle <= 80:
+        if self.angle <= -80:
             self.image = self.IMGS[1]
             self.image_score = self.ANIMATION_TIME*2
 
@@ -125,7 +126,7 @@ class Pipe:
         self.x -= self.SPEED
 
     def draw(self, screen):
-        screen.blit(self.pos_base_image, (self.x, self.pos_top))
+        screen.blit(self.pos_top_image, (self.x, self.pos_top))
         screen.blit(self.pos_base_image, (self.x, self.pos_base))
 
     def clash(self, bird):
@@ -161,7 +162,7 @@ class Floor:
 
         if self.x1 + self.WIDGHT < 0:
             self.x1 = self.x2 + self.WIDGHT
-        if self.x2 + self.WIDGht < 0:
+        if self.x2 + self.WIDGHT < 0:
             self.x2 = self.x1 + self.WIDGHT
 
     def draw(self, screen):
@@ -169,14 +170,14 @@ class Floor:
         screen.blit(self.IMAGE, (self.x2, self.y))
 
 
-def draw_screen(screen, birds, pipes, floor, point):
+def draw_screen(screen, birds, pipes, floor, points):
     screen.blit(BACKGROUND_IMAGE, (0, 0))
     for bird in birds:
         bird.draw(screen)
     for pipe in pipes:
         pipe.draw(screen)
 
-    text = POINT_FONT.render(f"Pontuação: {point}", 1, (221, 217, 231))
+    text = POINT_FONT.render(f"Pontuação: {points}", 1, (221, 217, 231))
     screen.blit(text, (SCREEN_WIDGHT - 10 - text.get_width(), 10))
     floor.draw(screen)
     pygame.display.update()
@@ -187,23 +188,25 @@ def main():
     floor = Floor(730)
     pipes = [Pipe(700)]
     screen = pygame.display.set_mode((SCREEN_WIDGHT, SCREEN_HEIGHT))
-    point = 0
+    points = 0
     timer = pygame.time.Clock()
 
     start = True
     while start:
         timer.tick(60)
 
+        # interação com Usuário
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 start = False
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_SPACE:
                     for bird in birds:
                         bird.jump()
 
+        # Mover as coisas
         for bird in birds:
             bird.move_Bird()
         floor.move_Floor()
@@ -218,11 +221,11 @@ def main():
                     pipe.passed = True
                     add_pipe = True
             pipe.move_Pipe()
-            if pipe.x + pipe.pos_top_image() < 0:
+            if pipe.x + pipe.pos_top_image.get_width() < 0:
                 rm_pipe.append(pipe)
 
         if add_pipe:
-            point += 1
+            points += 1
             pipes.append(Pipe(600))
         for pipe in rm_pipe:
             pipes.remove(pipe)
@@ -231,7 +234,7 @@ def main():
             if (bird.y + bird.image.get_height()) > floor.y or bird.y < 0:
                 birds.pop(i)
 
-        draw_screen(screen, birds, pipes, floor, point)
+        draw_screen(screen, birds, pipes, floor, points)
 
 
 if __name__ == '__main':
