@@ -40,13 +40,15 @@ Windows = {nome_do_Ambiente_Virtual}/Scripts/activate
 Linux = source {nome_do_Ambiente_Virtual}\bin\activate
 ```
 
-Biblioteca:
+Bibliotecas:
 
 ```python
 pip install pygame
 ```
 
-
+```python
+pip install neat-python
+```
 
 **Pronto!**
 
@@ -54,7 +56,7 @@ pip install pygame
 
 ![flappybridvideo1 2](https://user-images.githubusercontent.com/42840902/114314070-972abb80-9acf-11eb-943d-865d3340420e.gif)
 
-
+Se quiser jogar o jogo, é possivel fazer essa alteração no código, na Variavel **ai_jogando**, deve colocar valor **False** para que o jogo se torne manual.
 
 ## Ferramentas
 - Python(Pygame)
