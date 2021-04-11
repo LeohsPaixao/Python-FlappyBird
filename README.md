@@ -18,7 +18,7 @@ A configuração do NEAT é feita em um arquivo TXT e linkada no código, para q
 
 É feito um conceito de **_gerações_**, onde dentre esses 100 Inputs irá gerar 1 output, ao aplicar os 100 Inputs no Jogo, irá analisar e verificar qual dos Inputs teve um melhor output, sendo assim, fazendo uma geração nova através deste input.
 
-Para saber mais sobre a AI NEAT, Acesse [NEAT Python]([Welcome to NEAT-Python's documentation! — NEAT-Python 0.92 documentation (neat-python.readthedocs.io)](https://neat-python.readthedocs.io/en/latest/)).
+Para saber mais sobre a AI NEAT, Acesse [NEAT Python](https://neat-python.readthedocs.io/en/latest/).
 
 ## Execução
 
