@@ -3,7 +3,8 @@ import os
 import random
 import neat
 
-
+ai_gaming = True
+generation = 0
 
 
 SCREEN_WIDTH = 500
@@ -184,6 +185,11 @@ def desenhar_tela(tela, passaros, canos, chao, pontos):
 
     texto = FONTE_PONTOS.render(f"Pontuação: {pontos}", 1, (255, 255, 255))
     tela.blit(texto, (SCREEN_WIDTH - 10 - texto.get_width(), 10))
+
+    if ai_gaming:
+        texto = FONTE_PONTOS.render(f"Geração: {generation}", 1, (255, 255, 255))
+        tela.blit(texto, (10, 10))
+
     chao.desenhar(tela)
     pygame.display.update()
 
