@@ -1,6 +1,9 @@
 import pygame
 import os
 import random
+import neat
+
+
 
 
 SCREEN_WIDTH = 500
