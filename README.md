@@ -14,7 +14,7 @@ entradas até que consiga aprender a saida "perfeita".
 
 A configuração do NEAT é feita em um arquivo TXT e linkada no código, para que seja possivelmente a IA identificar suas regras. É passado vários Input para NEAT, no caso 100:
 
-![Input and Output](https://user-images.githubusercontent.com/42840902/114312561-65aef180-9ac9-11eb-83d6-383b7f1ca957.png)
+![Input and Output1](https://user-images.githubusercontent.com/42840902/114314540-8f6c1680-9ad1-11eb-8577-5ebb5f180c1f.png)
 
 É feito um conceito de **_gerações_**, onde dentre esses 100 Inputs irá gerar 1 output, ao aplicar os 100 Inputs no Jogo, irá analisar e verificar qual dos Inputs teve um melhor output, sendo assim, fazendo uma geração nova através deste input.
 
