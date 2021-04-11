@@ -3,8 +3,8 @@ import os
 import random
 
 
-TELA_LARGURA = 500
-TELA_ALTURA = 800
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 800
 
 IMAGEM_CANO = pygame.transform.scale2x(
     pygame.image.load(os.path.join('imgs', 'pipe.png')))
@@ -180,7 +180,7 @@ def desenhar_tela(tela, passaros, canos, chao, pontos):
         cano.desenhar(tela)
 
     texto = FONTE_PONTOS.render(f"Pontuação: {pontos}", 1, (255, 255, 255))
-    tela.blit(texto, (TELA_LARGURA - 10 - texto.get_width(), 10))
+    tela.blit(texto, (SCREEN_WIDTH - 10 - texto.get_width(), 10))
     chao.desenhar(tela)
     pygame.display.update()
 
@@ -189,7 +189,7 @@ def main():
     passaros = [Passaro(230, 350)]
     chao = Chao(730)
     canos = [Cano(700)]
-    tela = pygame.display.set_mode((TELA_LARGURA, TELA_ALTURA))
+    tela = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pontos = 0
     relogio = pygame.time.Clock()
 
