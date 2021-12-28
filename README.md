@@ -12,7 +12,7 @@ entradas até que consiga aprender a saida "perfeita".
 
 ## NEAT
 
-A configuração do NEAT é feita em um arquivo TXT e linkada no código, para que seja possivelmente a IA identificar suas regras. É passado vários Input para NEAT, no caso 100:
+A configuração do NEAT é feita em um arquivo TXT e linkada no código, para que seja possivel a IA identificar suas regras. É passado vários Input para NEAT, no caso 100:
 
 ![Input and Output1](https://user-images.githubusercontent.com/42840902/114314540-8f6c1680-9ad1-11eb-8577-5ebb5f180c1f.png)
 
