@@ -106,7 +106,7 @@ class Bird:
 
 class Pipe:
     DISTANCE = 200
-    PIPE_SPEED = 5
+    PIPE_SPEED = 15
 
     def __init__(self, x):
         self.x = x
